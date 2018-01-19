@@ -93,9 +93,9 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mv cmake-*/CMake.app/Contents/* cmake-*; fi
 
 install:
-  - easy_install pip
   - #pip install --upgrade pip setuptools wheel
-  - pip install --only-binary=numpy,scipy,matplotlib numpy scipy matplotlib
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip2 install --only-binary=numpy,scipy,matplotlib numpy scipy matplotlib; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pip install --only-binary=numpy,scipy,matplotlib numpy scipy matplotlib; fi
   - ./cmake-*/bin/cmake $BUILD_FLAGS $EXTRA_BUILD_FLAGS .
   - make -j2
   - mv INSTALL/share/gadgetron/config/gadgetron.xml.example INSTALL/share/gadgetron/config/gadgetron.xml
